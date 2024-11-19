@@ -1,6 +1,6 @@
 services:
   laravel:
-    name: '${APP_NAME}-laravel'
+    container_name: '${APP_NAME}-laravel'
     build:
       context: './phpDockerfile'
     image: 'laravel:dev-env'
@@ -12,12 +12,12 @@ services:
       - ./:/app
     networks:
       network:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.42.0.3
     depends_on:
       - postgresql
 
   postgresql:
-    name: '${APP_NAME}-postgresql'
+    container_name: '${APP_NAME}-postgresql'
     image: postgres:16-alpine3.20
     environment:
       POSTGRES_DB: ${DB_DATABASE}
@@ -33,14 +33,14 @@ services:
       - postgresql_vol:/var/lib/postgresql/data
     networks:
       network:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.42.0.2
 
 networks:
   network:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.18.0.0/16
+        - subnet: 172.42.0.0/16
 
 volumes:
   postgresql_vol:
